@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "The server for my fullstack application made in node.js using MongoDB, Express, and Vue.js",
   "private": true,
-  "main": "src/app.js",
+  "main": "src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development nodemon src/app.js"
+    "dev": "cross-env NODE_ENV=development nodemon",
+    "start": "cross-env NODE_ENV=production node dist/app.js",
+    "build": "tsc"
   },
   "keywords": [
     "express",
