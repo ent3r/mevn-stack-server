@@ -1,0 +1,20 @@
+{
+  "name": "mevn-stack-server",
+  "version": "1.0.0",
+  "description": "The server for my fullstack application made in node.js using MongoDB, Express, and Vue.js",
+  "private": true,
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development nodemon src/app.js"
+  },
+  "keywords": [
+    "express",
+    "mongo",
+    "vue",
+    "fullstack",
+    "mevn"
+  ],
+  "author": "ent3r_ (https://ent3r.tk)",
+  "license": "GPL-3.0-or-later"
+}
