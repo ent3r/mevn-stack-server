@@ -20,6 +20,7 @@
   "author": "ent3r_ (https://ent3r.tk)",
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "ts-node": "^9.0.0"
   },
