@@ -11,10 +11,10 @@ ent3r/mevn-stack-server - replace with the repo URL
     <img src="https://raw.githubusercontent.com/ent3r/ent3r/master/enter_icon_1024x1024.png" alt="Logo" width="200">
   </a>
 
-  <h3 align="center">Project template</h3>
+  <h3 align="center">MEVN Stack server</h3>
 
   <p align="center">
-    A small template I use when making new projects.
+    This is the server for a fullstack application made in node.js, using MongoDB (mongoose), express.js, and vue.js
     <br />
     <a href="https://github.com/ent3r/mevn-stack-server/wiki"><strong>Explore the docs »</strong></a>
     <br />
