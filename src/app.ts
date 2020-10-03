@@ -1,10 +1,9 @@
-import * as express from "express";
-import * as bodyparser from "body-parser";
+import express = require("express");
+import { json } from "body-parser";
 
 const app = express();
 
-app.use(bodyparser.json());
-app.use(bodyparser.raw());
+app.use(json());
 
 app.all("/", (req: express.Request, res: express.Response): void => {
   res.send(
@@ -12,9 +11,6 @@ app.all("/", (req: express.Request, res: express.Response): void => {
   );
 });
 
-app.listen(8080, (err) => {
-  if (err) {
-    throw err;
-  }
+app.listen(8080, () => {
   console.log("Listening on 8080");
 });
