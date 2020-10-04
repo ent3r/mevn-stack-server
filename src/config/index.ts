@@ -39,6 +39,14 @@ const config = convict({
       env: "MONGO_DB_NAME",
     },
   },
+  logging: {
+    level: {
+      doc: "How detailed the logging should be",
+      format: String,
+      default: "warn",
+      env: "LOGGING_LEVEL",
+    },
+  },
 });
 
 config.loadFile(resolve(__dirname, `.env.${config.get("env")}.json`));
