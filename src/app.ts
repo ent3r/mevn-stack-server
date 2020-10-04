@@ -1,16 +1,10 @@
 import express = require("express");
-import { json } from "body-parser";
 import config from "./config/index";
+import loaders from "./loaders/index";
 
 const app = express();
 
-app.use(json());
-
-app.all("/", (req: express.Request, res: express.Response): void => {
-  res.send(
-    `Hello world! Here is the data you sent me: ${JSON.stringify(req.body)}`
-  );
-});
+loaders(app);
 
 const port = config.get("port");
 const ip = config.get("ip");
