@@ -1,5 +1,6 @@
 import { Application } from "express";
 import { json } from "body-parser";
+import cors = require("cors");
 
 export default (app: Application): void => {
   /**
@@ -14,4 +15,5 @@ export default (app: Application): void => {
   });
 
   app.use(json());
+  app.use(cors());
 };
