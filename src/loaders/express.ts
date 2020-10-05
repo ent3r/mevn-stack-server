@@ -3,6 +3,7 @@ import { json } from "body-parser";
 import cors = require("cors");
 
 import Logger from "./logger";
+import routes from "../api";
 
 export default (app: Application): void => {
   /**
@@ -20,4 +21,6 @@ export default (app: Application): void => {
 
   app.use(json());
   app.use(cors());
+
+  app.use("/api", routes());
 };
