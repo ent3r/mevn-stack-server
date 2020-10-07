@@ -5,6 +5,7 @@ import cors = require("cors");
 
 import Logger from "./logger";
 import routes from "../api";
+import { errors as celebrateErrors } from "celebrate";
 
 export default (app: Application): void => {
   /**
@@ -25,4 +26,6 @@ export default (app: Application): void => {
   app.use(cors());
 
   app.use("/api", routes());
+
+  app.use(celebrateErrors());
 };
