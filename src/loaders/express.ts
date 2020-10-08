@@ -1,6 +1,5 @@
 import { Application } from "express";
 import { json } from "body-parser";
-import cookieParser = require("cookie-parser");
 import cors = require("cors");
 
 import Logger from "./logger";
@@ -22,7 +21,6 @@ export default (app: Application): void => {
   });
 
   app.use(json());
-  app.use(cookieParser());
   app.use(cors());
 
   app.disable("x-powered-by");
