@@ -31,6 +31,27 @@ export default (router: Router): void => {
     }
   );
 
+  router.patch(
+    "/posts/:postID",
+    celebrate(
+      {
+        params: Joi.object({ postID: Joi.string().length(24).required() }),
+        body: Joi.object({
+          title: Joi.string().min(5).max(120),
+          body: Joi.string().min(1).max(480),
+          author: Joi.string().min(2).max(50),
+        }).min(1),
+      },
+      { messages: { "object.min": "body must have at least {#limit} key" } }
+    ),
+    async (req: Request, res: Response): Promise<Response<any>> => {
+      return postService
+        .updatePost(req.params.postID, req.body)
+        .then((newDoc) => res.status(200).send(newDoc._id))
+        .catch((rejectReason) => res.status(500).send(rejectReason));
+    }
+  );
+
   router.delete(
     "/posts/:postID",
     postIDValidation,

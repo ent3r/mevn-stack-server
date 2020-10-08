@@ -37,8 +37,13 @@ export default class PostService {
   /**
    * updatePost
    */
-  public async updatePost(): Promise<void> {
-    return;
+  public async updatePost(
+    postID: string,
+    newContent: unknown
+  ): Promise<IPostModel> {
+    return PostModel.findByIdAndUpdate(postID, newContent).then(
+      (idkStatusStuff) => idkStatusStuff
+    );
   }
 
   /**
