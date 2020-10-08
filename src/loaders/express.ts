@@ -25,6 +25,8 @@ export default (app: Application): void => {
   app.use(cookieParser());
   app.use(cors());
 
+  app.disable("x-powered-by");
+
   app.use("/api", routes());
 
   app.use(celebrateErrors());
