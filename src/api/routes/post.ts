@@ -19,8 +19,8 @@ export default (router: Router): void => {
         author: Joi.string().min(2).max(50).optional().default("Anon"),
       }),
     }),
-    (req: Request, res: Response): void => {
-      postService
+    async (req: Request, res: Response): Promise<Response<any>> => {
+      return postService
         .createNewPost({
           title: req.body.title,
           body: req.body.body,
@@ -34,26 +34,29 @@ export default (router: Router): void => {
   router.delete(
     "/posts/:postID",
     postIDValidation,
-    (req: Request, res: Response): void => {
-      postService
+    async (req: Request, res: Response): Promise<Response<any>> => {
+      return postService
         .deletePost(req.params.postID)
-        .then(() => res.status(204).end())
-        .catch((rejectReason) => res.status(500).send(rejectReason).end());
+        .then(() => res.status(204).send())
+        .catch((rejectReason) => res.status(500).send(rejectReason).send());
     }
   );
 
-  router.get("/posts", (req: Request, res: Response): void => {
-    postService
-      .getPosts()
-      .then((posts) => res.status(200).send(posts))
-      .catch((rejectReason) => res.status(500).send(rejectReason));
-  });
+  router.get(
+    "/posts",
+    async (req: Request, res: Response): Promise<Response<any>> => {
+      return postService
+        .getPosts()
+        .then((posts) => res.status(200).send(posts))
+        .catch((rejectReason) => res.status(500).send(rejectReason));
+    }
+  );
 
   router.get(
     "/posts/:postID",
     postIDValidation,
-    (req: Request, res: Response): void => {
-      postService
+    async (req: Request, res: Response): Promise<Response<any>> => {
+      return postService
         .getPost(req.params.postID)
         .then((post) => res.status(200).send(post))
         .catch((rejectReason) => res.status(500).send(rejectReason));
