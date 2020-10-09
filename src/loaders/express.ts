@@ -1,4 +1,4 @@
-import { Application } from "express";
+import { Application, NextFunction, Request, Response } from "express";
 import { json } from "body-parser";
 import cors = require("cors");
 
@@ -28,4 +28,15 @@ export default (app: Application): void => {
   app.use("/api", routes());
 
   app.use(celebrateErrors());
+
+  app.use((req: Request, res: Response, next: NextFunction): void => {
+    const err = new Error("Not found");
+    err["status"] = 404;
+    next(err);
+  });
+
+  app.use((err: any, req: Request, res: Response, _next: NextFunction): void => {
+    res.status(err.status || 500);
+    res.send({ errors: { message: err.message } });
+  });
 };

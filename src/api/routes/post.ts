@@ -26,8 +26,7 @@ export default (router: Router): void => {
           body: req.body.body,
           author: req.body.author,
         })
-        .then((documentID: string) => res.status(201).send(documentID))
-        .catch((rejectReason) => res.status(500).send(rejectReason));
+        .then((documentID: string) => res.status(201).send(documentID));
     }
   );
 
@@ -47,8 +46,7 @@ export default (router: Router): void => {
     async (req: Request, res: Response): Promise<Response<any>> => {
       return postService
         .updatePost(req.params.postID, req.body)
-        .then((newDoc) => res.status(200).send(newDoc._id))
-        .catch((rejectReason) => res.status(500).send(rejectReason));
+        .then((newDoc) => res.status(200).send(newDoc._id));
     }
   );
 
@@ -58,8 +56,7 @@ export default (router: Router): void => {
     async (req: Request, res: Response): Promise<Response<any>> => {
       return postService
         .deletePost(req.params.postID)
-        .then(() => res.status(204).send())
-        .catch((rejectReason) => res.status(500).send(rejectReason).send());
+        .then(() => res.status(204).send());
     }
   );
 
@@ -68,8 +65,7 @@ export default (router: Router): void => {
     async (req: Request, res: Response): Promise<Response<any>> => {
       return postService
         .getPosts()
-        .then((posts) => res.status(200).send(posts))
-        .catch((rejectReason) => res.status(500).send(rejectReason));
+        .then((posts) => res.status(200).send(posts));
     }
   );
 
@@ -79,8 +75,7 @@ export default (router: Router): void => {
     async (req: Request, res: Response): Promise<Response<any>> => {
       return postService
         .getPost(req.params.postID)
-        .then((post) => res.status(200).send(post))
-        .catch((rejectReason) => res.status(500).send(rejectReason));
+        .then((post) => res.status(200).send(post));
     }
   );
 };
