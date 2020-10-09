@@ -6,6 +6,7 @@ export interface IPostSchema {
   author: string;
   publishedAt: Date;
   lastEditedAt: Date;
+  uuid: string;
 }
 
 export const PostSchema = new Schema<IPostSchema>({
@@ -14,6 +15,7 @@ export const PostSchema = new Schema<IPostSchema>({
   author: String,
   publishedAt: Date,
   lastEditedAt: Date,
+  uuid: String,
 });
 
 export interface IPostModel extends Document {
@@ -22,6 +24,7 @@ export interface IPostModel extends Document {
   author: string;
   publishedAt: Date;
   lastEditedAt: Date;
+  uuid: string;
 }
 
 export const PostModel = model<IPostModel>("post", PostSchema);

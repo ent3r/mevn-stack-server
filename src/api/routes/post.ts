@@ -5,8 +5,8 @@ import PostService from "../../services/posts";
 
 const postService = new PostService();
 
-const postIDValidation = celebrate({
-  params: Joi.object({ postID: Joi.string().length(24).required() }),
+const postUUIDValidation = celebrate({
+  params: Joi.object({ postID: Joi.string().length(36).required() }),
 });
 
 export default (router: Router): void => {
@@ -45,7 +45,7 @@ export default (router: Router): void => {
 
   router
     .route("/posts/:postID")
-    .all(postIDValidation)
+    .all(postUUIDValidation)
     .get(
       async (req: Request, res: Response): Promise<Response<any>> => {
         return postService
@@ -67,7 +67,7 @@ export default (router: Router): void => {
       async (req: Request, res: Response): Promise<Response<any>> => {
         return postService
           .updatePost(req.params.postID, req.body)
-          .then((newDoc) => res.status(200).send(newDoc._id));
+          .then((newDoc) => res.status(200).send(newDoc.uuid));
       }
     )
     .delete(
