@@ -41,8 +41,9 @@ export default class PostService {
    */
   public async updatePost(
     postUUID: string,
-    newContent: unknown
+    newContent: any
   ): Promise<IPostModel> {
+    newContent.lastEditedAt = new Date();
     return PostModel.findOneAndUpdate({ uuid: postUUID }, newContent).then(
       (idkStatusStuff) => idkStatusStuff
     );
