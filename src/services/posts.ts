@@ -31,9 +31,12 @@ export default class PostService {
   /**
    * deletePost
    */
-  public async deletePost(postUUID: string): Promise<void> {
-    await PostModel.findOneAndDelete({ uuid: postUUID }).then();
-    return;
+  public async deletePost(postUUID: string): Promise<string | void> {
+    const post = await PostModel.findOne({ uuid: postUUID });
+    if (!post) {
+      return;
+    }
+    return post.deleteOne().then((deletedPost) => deletedPost.uuid);
   }
 
   /**
@@ -42,11 +45,13 @@ export default class PostService {
   public async updatePost(
     postUUID: string,
     newContent: any
-  ): Promise<IPostModel> {
+  ): Promise<IPostModel | void> {
     newContent.lastEditedAt = new Date();
-    return PostModel.findOneAndUpdate({ uuid: postUUID }, newContent).then(
-      (idkStatusStuff) => idkStatusStuff
-    );
+    const post = await PostModel.findOne({ uuid: postUUID });
+    if (!post) {
+      return;
+    }
+    return post.updateOne(newContent).then((idkStatusStuff) => idkStatusStuff);
   }
 
   /**
@@ -60,10 +65,13 @@ export default class PostService {
   /**
    * getPost
    */
-  public async getPost(postUUID: string): Promise<IPostModel> {
+  public async getPost(postUUID: string): Promise<IPostModel | void> {
     const post = await PostModel.findOne({ uuid: postUUID })
       .select("-_id")
       .select("-__v");
+    if (!post) {
+      return;
+    }
     return post;
   }
 }

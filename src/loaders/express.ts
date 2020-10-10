@@ -30,7 +30,7 @@ export default (app: Application): void => {
   app.use(celebrateErrors());
 
   app.use((req: Request, res: Response, next: NextFunction): void => {
-    const err = new Error("Not found");
+    const err = new Error("Not Found");
     err["status"] = 404;
     next(err);
   });

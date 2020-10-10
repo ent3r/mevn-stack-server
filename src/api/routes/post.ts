@@ -47,10 +47,20 @@ export default (router: Router): void => {
     .route("/posts/:postID")
     .all(postUUIDValidation)
     .get(
-      async (req: Request, res: Response): Promise<Response<any>> => {
-        return postService
-          .getPost(req.params.postID)
-          .then((post) => res.status(200).send(post));
+      async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ): Promise<Response<any> | void> => {
+        return postService.getPost(req.params.postID).then((postID) => {
+          if (!postID) {
+            const err = new Error("Not Found");
+            err["status"] = 404;
+            next(err);
+          } else {
+            res.status(200).send(postID);
+          }
+        });
       }
     )
     .patch(
@@ -64,17 +74,39 @@ export default (router: Router): void => {
         },
         { messages: { "object.min": "body must have at least {#limit} key" } }
       ),
-      async (req: Request, res: Response): Promise<Response<any>> => {
+      async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ): Promise<Response<any> | void> => {
         return postService
           .updatePost(req.params.postID, req.body)
-          .then((newDoc) => res.status(200).send(newDoc.uuid));
+          .then((newDoc) => {
+            if (!newDoc) {
+              const err = new Error("Not Found");
+              err["status"] = 404;
+              next(err);
+            } else {
+              res.status(200).send(newDoc);
+            }
+          });
       }
     )
     .delete(
-      async (req: Request, res: Response): Promise<Response<any>> => {
-        return postService
-          .deletePost(req.params.postID)
-          .then(() => res.status(204).send());
+      async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+      ): Promise<Response<any> | void> => {
+        return postService.deletePost(req.params.postID).then((deletedPostUUID) => {
+          if (!deletedPostUUID) {
+            const err = new Error("Not Found");
+            err["status"] = 404;
+            next(err);
+          } else {
+            res.status(200).send(deletedPostUUID);
+          }
+        });
       }
     )
     .all((req: Request, res: Response, next: NextFunction): void => {
