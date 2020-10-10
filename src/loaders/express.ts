@@ -5,7 +5,7 @@ import { errors as celebrateErrors } from "celebrate";
 
 import Logger from "./logger";
 import routes from "../api";
-import { NotFoundError } from "../types/httperrors";
+import { ImATeapotError, NotFoundError } from "../types/httperrors";
 
 export default (app: Application): void => {
   /**
@@ -20,6 +20,13 @@ export default (app: Application): void => {
     res.status(200).send("ok").end();
     Logger.http("Recieved call to /status");
   });
+
+  app.all(
+    "/teapot",
+    (req: Request, res: Response, next: NextFunction): void => {
+      next(new ImATeapotError());
+    }
+  );
 
   app.use(json());
   app.use(cors());
