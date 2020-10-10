@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { celebrate, Joi } from "celebrate";
 
 import PostService from "../../services/posts";
+import { MethodNotAllowedError, NotFoundError } from "../../types/httperrors";
 
 const postService = new PostService();
 
@@ -38,9 +39,7 @@ export default (router: Router): void => {
       }
     )
     .all((req: Request, res: Response, next: NextFunction): void => {
-      const err = new Error("Method Not Allowed");
-      err["status"] = 405;
-      next(err);
+      next(new MethodNotAllowedError());
     });
 
   router
@@ -54,9 +53,7 @@ export default (router: Router): void => {
       ): Promise<Response<any> | void> => {
         return postService.getPost(req.params.postID).then((postID) => {
           if (!postID) {
-            const err = new Error("Not Found");
-            err["status"] = 404;
-            next(err);
+            next(new NotFoundError());
           } else {
             res.status(200).send(postID);
           }
@@ -83,9 +80,7 @@ export default (router: Router): void => {
           .updatePost(req.params.postID, req.body)
           .then((newDoc) => {
             if (!newDoc) {
-              const err = new Error("Not Found");
-              err["status"] = 404;
-              next(err);
+              next(new NotFoundError());
             } else {
               res.status(200).send(newDoc);
             }
@@ -100,9 +95,7 @@ export default (router: Router): void => {
       ): Promise<Response<any> | void> => {
         return postService.deletePost(req.params.postID).then((deletedPostUUID) => {
           if (!deletedPostUUID) {
-            const err = new Error("Not Found");
-            err["status"] = 404;
-            next(err);
+            next(new NotFoundError());
           } else {
             res.status(200).send(deletedPostUUID);
           }
@@ -110,8 +103,6 @@ export default (router: Router): void => {
       }
     )
     .all((req: Request, res: Response, next: NextFunction): void => {
-      const err = new Error("Method Not Allowed");
-      err["status"] = 405;
-      next(err);
+      next(new MethodNotAllowedError());
     });
 };
