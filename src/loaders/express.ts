@@ -41,8 +41,10 @@ export default (app: Application): void => {
     next(new NotFoundError());
   });
 
-  app.use((err: any, req: Request, res: Response, _next: NextFunction): void => {
-    res.status(err.statusCode || 500);
-    res.send({ errors: { message: err.message } });
-  });
+  app.use(
+    (err: any, req: Request, res: Response, _next: NextFunction): void => {
+      res.status(err.statusCode || 500);
+      res.send({ errors: { message: err.message } });
+    }
+  );
 };

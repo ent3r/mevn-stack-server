@@ -93,13 +93,15 @@ export default (router: Router): void => {
         res: Response,
         next: NextFunction
       ): Promise<Response<any> | void> => {
-        return postService.deletePost(req.params.postID).then((deletedPostUUID) => {
-          if (!deletedPostUUID) {
-            next(new NotFoundError());
-          } else {
-            res.status(200).send(deletedPostUUID);
-          }
-        });
+        return postService
+          .deletePost(req.params.postID)
+          .then((deletedPostUUID) => {
+            if (!deletedPostUUID) {
+              next(new NotFoundError());
+            } else {
+              res.status(200).send(deletedPostUUID);
+            }
+          });
       }
     )
     .all((req: Request, res: Response, next: NextFunction): void => {
