@@ -3,3 +3,10 @@ export interface PostInput {
   body: string;
   author: string;
 }
+
+export interface PostUpdateInput {
+  title?: string;
+  body?: string;
+  author?: string;
+  lastEditedAt?: Date;
+}

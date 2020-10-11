@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { IPostModel, PostModel } from "../models/Post";
 import Logger from "../loaders/logger";
-import { PostInput } from "../types";
+import { PostInput, PostUpdateInput } from "../types";
 
 export default class PostService {
   /**
@@ -44,7 +44,7 @@ export default class PostService {
    */
   public async updatePost(
     postUUID: string,
-    newContent: any
+    newContent: PostUpdateInput
   ): Promise<IPostModel | void> {
     newContent.lastEditedAt = new Date();
     const post = await PostModel.findOne({ uuid: postUUID });
