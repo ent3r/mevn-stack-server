@@ -12,7 +12,7 @@ export interface PostUpdateInput {
 }
 
 export interface GetPostQueryParams {
-  reversed?: boolean;
+  order?: "ascending" | "descending";
   limit?: number;
   page?: number;
 }

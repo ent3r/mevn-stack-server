@@ -62,7 +62,7 @@ export default class PostService {
     queryParams: GetPostQueryParams
   ): Promise<Array<IPostModel> | { pages: number; posts: Array<IPostModel> }> {
     const posts = await PostModel.find({}).select("-_id").select("-__v");
-    if (queryParams.reversed) {
+    if (queryParams.order === "descending") {
       posts.reverse();
     }
 
