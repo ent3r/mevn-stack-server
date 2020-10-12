@@ -3,6 +3,7 @@ import { celebrate, Joi } from "celebrate";
 
 import PostService from "../../services/posts";
 import { MethodNotAllowedError, NotFoundError } from "../../types/httperrors";
+import { GetPostQueryParams } from "../../types";
 
 const postService = new PostService();
 
@@ -10,13 +11,18 @@ const postUUIDValidation = celebrate({
   params: Joi.object({ postID: Joi.string().length(36).required() }),
 });
 
+const postQueryFilterValidation = celebrate({
+  query: Joi.object({ reversed: Joi.boolean().optional() }).optional(),
+});
+
 export default (router: Router): void => {
   router
     .route("/posts")
     .get(
+      postQueryFilterValidation,
       async (req: Request, res: Response): Promise<Response<any>> => {
         return postService
-          .getPosts()
+          .getPosts((req.query as GetPostQueryParams))
           .then((posts) => res.status(200).send(posts));
       }
     )

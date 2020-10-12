@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { IPostModel, PostModel } from "../models/Post";
 import Logger from "../loaders/logger";
-import { PostInput, PostUpdateInput } from "../types";
+import { GetPostQueryParams, PostInput, PostUpdateInput } from "../types";
 
 export default class PostService {
   /**
@@ -57,8 +57,11 @@ export default class PostService {
   /**
    * getPosts
    */
-  public async getPosts(): Promise<Array<IPostModel>> {
+  public async getPosts(queryParams: GetPostQueryParams): Promise<Array<IPostModel>> {
     const posts = await PostModel.find({}).select("-_id").select("-__v");
+    if (queryParams.reversed) {
+      posts.reverse();
+    }
     return posts;
   }
 

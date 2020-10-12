@@ -10,3 +10,7 @@ export interface PostUpdateInput {
   author?: string;
   lastEditedAt?: Date;
 }
+
+export interface GetPostQueryParams {
+  reversed?: boolean;
+}
