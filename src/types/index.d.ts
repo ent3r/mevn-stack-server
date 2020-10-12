@@ -13,4 +13,6 @@ export interface PostUpdateInput {
 
 export interface GetPostQueryParams {
   reversed?: boolean;
+  limit?: number;
+  page?: number;
 }

@@ -12,7 +12,11 @@ const postUUIDValidation = celebrate({
 });
 
 const postQueryFilterValidation = celebrate({
-  query: Joi.object({ reversed: Joi.boolean().optional() }).optional(),
+  query: Joi.object({
+    reversed: Joi.boolean().optional(),
+    limit: Joi.number().positive().optional(),
+    page: Joi.number().positive().optional(),
+  }).optional(),
 });
 
 export default (router: Router): void => {
@@ -22,7 +26,7 @@ export default (router: Router): void => {
       postQueryFilterValidation,
       async (req: Request, res: Response): Promise<Response<any>> => {
         return postService
-          .getPosts((req.query as GetPostQueryParams))
+          .getPosts(req.query as GetPostQueryParams)
           .then((posts) => res.status(200).send(posts));
       }
     )
