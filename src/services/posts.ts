@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { IPostModel, PostModel } from "../models/Post";
 import Logger from "../loaders/logger";
 import { GetPostQueryParams, PostInput, PostUpdateInput } from "../types";
-import { postPagination } from "../util";
+import { postPagination, sortByPublishedAt } from "../util";
 
 export default class PostService {
   /**
@@ -61,7 +61,12 @@ export default class PostService {
   public async getPosts(
     queryParams: GetPostQueryParams
   ): Promise<Array<IPostModel> | { pages: number; posts: Array<IPostModel> }> {
-    const posts = await PostModel.find({}).select("-_id").select("-__v");
+    let posts = await PostModel.find({}).select("-_id").select("-__v");
+
+    if (queryParams.sortBy === "date") {
+      posts = sortByPublishedAt(posts);
+    }
+
     if (queryParams.order === "descending") {
       posts.reverse();
     }

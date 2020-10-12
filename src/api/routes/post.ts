@@ -14,6 +14,7 @@ const postUUIDValidation = celebrate({
 const postQueryFilterValidation = celebrate({
   query: Joi.object({
     order: Joi.string().allow("ascending", "descending").optional(),
+    sortBy: Joi.string().allow("date").optional().default("default"),
     limit: Joi.number().positive().optional(),
     page: Joi.number().positive().optional(),
   }).optional(),

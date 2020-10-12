@@ -13,6 +13,7 @@ export interface PostUpdateInput {
 
 export interface GetPostQueryParams {
   order?: "ascending" | "descending";
+  sortBy?: "date" | "default";
   limit?: number;
   page?: number;
 }
